@@ -42,6 +42,12 @@ function App() {
     const [events, setEvents] = useState<Event[]>([]);
 
     useEffect(() => {
+        const updateStopwatch = () => {
+            const currentTime = Date.now();
+            const newElapsedTime = currentTime - (startTime || 0);
+            setElapsedTime(newElapsedTime);
+        };
+
         let interval: NodeJS.Timeout;
 
         if (running) {
@@ -49,13 +55,7 @@ function App() {
         }
 
         return () => clearInterval(interval);
-    }, [running]);
-
-    const updateStopwatch = () => {
-        const currentTime = Date.now();
-        const newElapsedTime = currentTime - (startTime || 0);
-        setElapsedTime(newElapsedTime);
-    };
+    }, [running, startTime]);
 
     const startStop = () => {
         if (!running) {
