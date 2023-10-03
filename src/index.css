@@ -5,9 +5,63 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+li {
+  list-style-type: none;
+}
+
+.App {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.csv {
+  margin: 2rem;
+}
+
+.stopwatch {
+  font-size: 2rem;
+  padding: 1rem 0;
+}
+
+.stopwatch-start {
+  background-color: green;
+  color: white;
+  height: 4rem;
+  width: 8rem;
+}
+
+.stopwatch-stop {
+  background-color: red;
+  height: 4rem;
+  width: 8rem;
+}
+
+.csv {
+  margin: 2rem;
+}
+
+.actions {
+  align-items: center;
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
+.action-button {
+  padding: 10px;
+  height: 4rem;
+  width: 8rem;
 }
