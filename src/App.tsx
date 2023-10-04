@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import moment from 'moment';
 import { CSVLink } from 'react-csv';
+import { useLocalStorage } from './useLocalStorage';
 
-class Event {
+interface Event {
     time: number;
     type: EventTypeKey;
-
-    constructor(time: number, type: EventTypeKey) {
-        this.time = time;
-        this.type = type;
-    }
-
-    print(): string {
-        return `${formatTime(this.time)} - ${this.type}`
-    }
 }
 
 const formatTime = (milliseconds: number) => {
-    return moment.utc(milliseconds).format('HH:mm:ss.SSS');
+    return moment.utc(milliseconds).format('H:mm:ss.SS');
 };
 
 enum EventType {
@@ -36,10 +28,20 @@ enum EventType {
 type EventTypeKey = keyof typeof EventType
 
 function App() {
-    const [startTime, setStartTime] = useState<number | null>(null);
-    const [running, setRunning] = useState<boolean>(false);
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
-    const [events, setEvents] = useState<Event[]>([]);
+    const [startTime, setStartTime] = useLocalStorage<number|null>("startTime", null)
+    const [running, setRunning] = useLocalStorage<boolean>("running", false);
+    const [elapsedTime, setElapsedTime] = useLocalStorage<number>("elapsedTime", 0);
+    const [events, setEvents] = useLocalStorage<Event[]>("events", [])
+
+    useEffect(() => {
+        // Save events to local storage whenever the events state changes
+        localStorage.setItem('events', JSON.stringify(events));
+    }, [events]);
+
+    useEffect(() => {
+        // Save events to local storage whenever the events state changes
+        localStorage.setItem('startTime', JSON.stringify(startTime));
+    }, [startTime]);
 
     useEffect(() => {
         const updateStopwatch = () => {
@@ -55,7 +57,7 @@ function App() {
         }
 
         return () => clearInterval(interval);
-    }, [running, startTime]);
+    }, [running, startTime, setElapsedTime]);
 
     const startStop = () => {
         if (!running) {
@@ -67,7 +69,7 @@ function App() {
     };
 
     const logEvent = (eventType: EventTypeKey) => {
-        setEvents([...events, new Event(elapsedTime, eventType)]);
+        setEvents([...events, { "time": elapsedTime, "type": eventType }]);
     };
 
     const reset = () => {
@@ -96,7 +98,7 @@ function App() {
             </div>
             <ul>
                 {events.map((event, index) => (
-                    <li key={index}>{event.print()}</li>
+                    <li key={index}>{`${formatTime(event.time)} - ${event.type}`}</li>
                 ))}
             </ul>
         </div>
