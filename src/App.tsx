@@ -6,7 +6,7 @@ import {useLocalStorage} from './useLocalStorage';
 
 interface Event {
     time: number;
-    type: EventTypeKey;
+    type: EventTypeKey | 'END_SET';
 }
 
 const formatTime = (milliseconds: number) => {
@@ -65,10 +65,12 @@ function App() {
             setStartTime(Date.now() - elapsedTime);
         } else {
             setRunning(false);
+            setElapsedTime(0)
+            logEvent('END_SET');
         }
     };
 
-    const logEvent = (eventType: EventTypeKey) => {
+    const logEvent = (eventType: EventTypeKey | 'END_SET') => {
         setEvents([{ "time": elapsedTime, "type": eventType }, ...events]);
     };
 
@@ -88,7 +90,9 @@ function App() {
                 <button className="stopwatch-reset" onClick={reset}>Reset</button>
             </div>
             <div className="stopwatch">{formatTime(elapsedTime)}</div>
-            <div><button className={running ? "stopwatch-stop" : "stopwatch-start"} onClick={startStop}>{running ? 'Stop' : 'Start'}</button></div>
+            <div>
+                <button className={running ? "stopwatch-stop" : "stopwatch-start"} onClick={startStop}>{running ? 'Stop' : 'Start'}</button>
+            </div>
             <div className="actions">
                 {Object.keys(EventType).filter(key => isNaN(Number(key))).map(eventType => (
                     <button className="action-button" onClick={() => logEvent(eventType as EventTypeKey)} key={eventType}>
@@ -98,7 +102,7 @@ function App() {
             </div>
             <ul>
                 {events.map((event, index) => (
-                    <li key={index}>{`${formatTime(event.time)} - ${event.type}`}</li>
+                    event.type === 'END_SET' ? <hr className='horizontal' /> : <li key={index}>{`${formatTime(event.time)} - ${event.type}`}</li>
                 ))}
             </ul>
         </div>
