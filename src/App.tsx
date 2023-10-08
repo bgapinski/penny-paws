@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import moment from 'moment';
-import { CSVLink } from 'react-csv';
-import { useLocalStorage } from './useLocalStorage';
+import {CSVLink} from 'react-csv';
+import {useLocalStorage} from './useLocalStorage';
 
 interface Event {
     time: number;
@@ -69,7 +69,7 @@ function App() {
     };
 
     const logEvent = (eventType: EventTypeKey) => {
-        setEvents([...events, { "time": elapsedTime, "type": eventType }]);
+        setEvents([{ "time": elapsedTime, "type": eventType }, ...events]);
     };
 
     const reset = () => {
