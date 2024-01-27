@@ -1,3 +1,7 @@
+Small app to track training missions for separation anxiety.
+
+View at https://www.bgapinski.com/penny-paws
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
