@@ -102,7 +102,10 @@ function App() {
             </div>
             <ul>
                 {events.map((event, index) => (
-                    event.type === 'END_SET' ? <hr className='horizontal' /> : <li key={index}>{`${formatTime(event.time)} - ${event.type}`}</li>
+                    <>
+                        {event.type === 'END_SET' ? <hr className='horizontal' /> : null}
+                        <li key={index}>{`${formatTime(event.time)} - ${event.type}`}</li>
+                    </>
                 ))}
             </ul>
         </div>

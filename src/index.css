@@ -29,6 +29,7 @@ li {
 }
 
 .stopwatch {
+  font-family: ui-monospace;
   font-size: 2rem;
   padding: 1rem 0;
 }
