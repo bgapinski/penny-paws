@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import './App.css';
+import 'App.css';
 import moment from 'moment';
 import {CSVLink} from 'react-csv';
-import {useLocalStorage} from './useLocalStorage';
+import {useLocalStorage} from 'storage/useLocalStorage';
 
 interface Event {
     time: number;
