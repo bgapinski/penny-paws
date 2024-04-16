@@ -2,23 +2,30 @@
   "name": "penny-paws",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "npx prettier . --write",
+    "format:ci": "npx prettier . --check"
   },
   "dependencies": {
+    "next": "14.2.1",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.1"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/js": "^9.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.1"
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.1",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "3.2.5",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.7.0"
   }
 }
