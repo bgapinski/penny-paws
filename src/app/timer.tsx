@@ -2,6 +2,8 @@ import { useLocalStorage } from "@/storage/useLocalStorage";
 import { useEffect } from "react";
 import moment from "moment";
 
+import styles from "@/app/page.module.css";
+
 interface Event {
   time: number;
   type: EventTypeKey | "END_SET";
@@ -86,27 +88,27 @@ export const Timer = function () {
   };
 
   return (
-    <>
+    <div className={styles.timer}>
       <div>
-        <button className="stopwatch-reset" onClick={reset}>
+        <button className={styles.stopwatchReset} onClick={reset}>
           Reset
         </button>
       </div>
-      <div className="stopwatch">{formatTime(elapsedTime)}</div>
+      <div className={styles.stopwatch}>{formatTime(elapsedTime)}</div>
       <div>
         <button
-          className={running ? "stopwatch-stop" : "stopwatch-start"}
+          className={running ? styles.stopwatchStop : styles.stopwatchStart}
           onClick={startStop}
         >
           {running ? "Stop" : "Start"}
         </button>
       </div>
-      <div className="actions">
+      <div className={styles.actions}>
         {Object.keys(EventType)
           .filter((key) => isNaN(Number(key)))
           .map((eventType) => (
             <button
-              className="action-button"
+              className={styles.actionButton}
               onClick={() => logEvent(eventType as EventTypeKey)}
               key={eventType}
             >
@@ -117,11 +119,16 @@ export const Timer = function () {
       <ul>
         {events.map((event, index) => (
           <>
-            {event.type === "END_SET" ? <hr className="horizontal" /> : null}
-            <li key={index}>{`${formatTime(event.time)} - ${event.type}`}</li>
+            {event.type === "END_SET" ? (
+              <hr className={styles.horizontal} />
+            ) : null}
+            <li
+              className={styles.event}
+              key={index}
+            >{`${formatTime(event.time)} - ${event.type}`}</li>
           </>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
